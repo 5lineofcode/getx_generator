@@ -1,5 +1,5 @@
 name: getx_generator
-version: 0.0.39
+version: 0.0.40
 homepage: https://github.com/5lineofcode/getx_generator
 description: Getx Generator (Under Development)
 environment: 
@@ -7,6 +7,7 @@ environment:
 dependencies: 
   process_run: 0.10.12+3
   args: ^1.6.0
+  path: any
 dev_dependencies: 
   pedantic: ^1.9.0
   test: ^1.14.4

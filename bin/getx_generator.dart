@@ -5,6 +5,7 @@ import 'package:getx_generator/resources/template/view.dart';
 import 'package:getx_generator/shared/extension/clean_filename.dart';
 import "package:getx_generator/shared/helper/template/template.dart";
 import 'package:args/args.dart';
+import 'package:path/path.dart';
 
 ArgResults argResults;
 Map getArgumentsMap(ArgResults argResults) {
@@ -34,6 +35,7 @@ void main(List<String> args) async {
   print(res["name"]);
   print(res["address"]);
 
+  await generateDefinedTemplate();
   await getPackageName();
   // await createController();
   // await createImport();
@@ -41,18 +43,22 @@ void main(List<String> args) async {
   await createView();
 }
 
-void getPackageName() async {
-  var content = await File("pubspec.yaml").readAsString();
+void doGenerateDefinedTemplate(String templateName) async {
+  var file = await File("defined_template/${templateName}.dartx");
+  var template = await file.readAsString();
+  var fileName = "lib/resources/template/${templateName}.dart";
 
-  var lines = content.split("\n");
-  var selectedLines =
-      lines.where((line) => line.startsWith("name: ")).toList()[0];
+  template = template.replaceAll("\$", "\\\$");
 
-  packageName = selectedLines.split("name: ")[1];
-  packageName = packageName.replaceAll("\r\n", "");
-  packageName = packageName.replaceAll("\n", "");
-  packageName = packageName.replaceAll(RegExp(r"/^\s\n+|\s\n+$/g"), "");
-  packageName = "$packageName";
+  template =
+      "var ${basename(file.path).split(".")[0]}Template = '''\n${template}\n''';";
+
+  Template.create(fileName, template);
+}
+
+void generateDefinedTemplate() async {
+  await doGenerateDefinedTemplate("view");
+  await doGenerateDefinedTemplate("controller");
 }
 
 void createController() async {

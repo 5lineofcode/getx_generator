@@ -1,4 +1,3 @@
-var viewTemplate = '''
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -9,7 +8,7 @@ class MainNavigationController extends GetxController {
 
   updateName() {
     count++;
-    nama = "SEs \${DateTime.now()}";
+    nama = "SEs ${DateTime.now()}";
     update();
   }
 
@@ -36,7 +35,7 @@ class MainNavigationView extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text("\${controller.count} | \${controller.nama}"),
+                Text("${controller.count} | ${controller.nama}"),
                 Container(
                   child: FlatButton(
                     child: Text("Button"),
@@ -53,5 +52,3 @@ class MainNavigationView extends StatelessWidget {
     );
   }
 }
-
-''';
