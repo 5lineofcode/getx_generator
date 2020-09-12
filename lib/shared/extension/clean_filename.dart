@@ -21,7 +21,8 @@ extension CleanFileNameForFileExtension on File {
     var file = this;
     var fileName = file.path;
     fileName = fileName.replaceAll("\\", "/").replaceAll("lib/", "");
-    fileName = "export \"package:${packageName}/${fileName}\";".getFileName();
+    fileName = "export \"package:${packageName}/${fileName}\";"
+        .getFileName();
     return fileName;
   }
 

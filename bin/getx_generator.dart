@@ -27,16 +27,19 @@ Map getArgumentsMap(ArgResults argResults) {
 }
 
 void main(List<String> args) async {
-  final parser = ArgParser();
-  parser.addFlag('name', abbr: "n");
-  parser.addFlag('address', abbr: "a");
-  argResults = parser.parse(args);
-  var res = getArgumentsMap(argResults);
-  print(res["name"]);
-  print(res["address"]);
+  // // final parser = ArgParser();
+  // // parser.addFlag('name', abbr: "n");
+  // // parser.addFlag('address', abbr: "a");
+  // // argResults = parser.parse(args);
+  // // var res = getArgumentsMap(argResults);
+  // // print(res["name"]);
+  // // print(res["address"]);
 
-  await generateDefinedTemplate();
+  // // await generateDefinedTemplate();
+  
   await getPackageName();
+  
+
   // await createController();
   await createImport();
 
@@ -44,10 +47,8 @@ void main(List<String> args) async {
 }
 
 void doGenerateDefinedTemplate(String templateName) async {
-  var f = await File("defined_templates/");
-  if (!f.existsSync()) return;
-
   var file = await File("defined_template/${templateName}.dartx");
+  if (!file.existsSync()) return;
   var template = await file.readAsString();
   var fileName = "lib/resources/template/${templateName}.dart";
 
@@ -110,17 +111,24 @@ Future<String> getPackageImport() async {
   var arr = result.split("\n");
 
   var excludeList = [
-    "fluter",
+    "flutter",
     "sdk",
     "git",
+    "url",
   ];
 
   for (var i = 0; i < arr.length; i++) {
     var row = arr[i];
 
-    if (row.contains(":")) {
+    if (row.contains(":") && !row.contains("#")) {
       var lib = row.split(":")[0].trim();
-      if (excludeList.contains(lib)) continue;
+
+      print("Skip $lib");
+      if (excludeList.contains(lib)) {
+        continue;
+      }
+      ;
+
       importScriptList.add("export \"package:$lib/$lib.dart\";");
     }
   }
