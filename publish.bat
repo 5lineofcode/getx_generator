@@ -1,4 +1,4 @@
-set version=pubver get
+set version=cmd /c pubver get
 
 cmd /c pubver bump patch
 git add .
