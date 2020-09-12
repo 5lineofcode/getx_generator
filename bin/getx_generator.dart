@@ -1,6 +1,7 @@
 import "dart:io";
 import "package:getx_generator/resources/session/package_info.dart";
 import "package:getx_generator/resources/template/controller.dart";
+import 'package:getx_generator/shared/extension/clean_filename.dart';
 import "package:getx_generator/shared/helper/template/template.dart";
 
 void main(List<String> arguments) async {
@@ -26,16 +27,20 @@ void createController() async {
 }
 
 void createImport() async {
+  List importScriptList = [];
   var dir = Directory("lib");
   List contents = dir.listSync(recursive: true);
+
   for (var fileOrDir in contents) {
     if (fileOrDir is File) {
-      String fileName = fileOrDir.toString();
-      print("file: $fileName");
-    } else if (fileOrDir is Directory) {
-      String dirName = fileOrDir.toString();
-      print("file: $dirName");
+      File file = fileOrDir;
+      if (file.isDartFile()) {
+        importScriptList.add(file.getExportScriptFromFileName());
+      }
     }
-    print(fileOrDir);
   }
+
+  var outputName = "lib/core.dart";
+  var content = "${importScriptList.join("\n")}";
+  await Template.create(outputName, content);
 }
