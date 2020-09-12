@@ -38,9 +38,9 @@ void main(List<String> args) async {
   await generateDefinedTemplate();
   await getPackageName();
   // await createController();
-  // await createImport();
+  await createImport();
 
-  await createView();
+  // await createView();
 }
 
 void doGenerateDefinedTemplate(String templateName) async {
