@@ -1,5 +1,4 @@
 import "dart:io";
-
 import 'package:getx_generator/core.dart';
 import 'package:process_run/shell.dart';
 
@@ -10,7 +9,8 @@ class Template {
     template = template
         .toString()
         .replaceAll("@material", "import \"package:flutter/material.dart\";")
-        .replaceAll("@core", "import \"package:$packageName/core.dart\";");
+        .replaceAll("@core", "import \"package:$packageName/core.dart\";")
+        .replaceAll("package:example_app", "package:$packageName");
 
     await file.writeAsString(template);
     await Template.format(outputName);

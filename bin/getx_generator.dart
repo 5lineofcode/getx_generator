@@ -34,11 +34,11 @@ void main(List<String> args) async {
   print(res["name"]);
   print(res["address"]);
 
-  // await getPackageName();
+  await getPackageName();
   // await createController();
   // await createImport();
 
-  // await createView();
+  await createView();
 }
 
 void getPackageName() async {
