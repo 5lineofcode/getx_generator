@@ -1,3 +1,4 @@
+export "package:getx_generator/core.dart";
 export "package:getx_generator/getx_generator.dart";
 export "package:getx_generator/resources/session/package_info.dart";
 export "package:getx_generator/resources/template/controller.dart";
