@@ -1,4 +1,4 @@
-call "pubver bump patch"
+cmd /c pubver bump patch
 git add .
 git commit -m "."
 git push --force
