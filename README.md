@@ -9,3 +9,13 @@ Created from templates made available by Stagehand under a BSD-style
 ```
 flutter pub global activate getx_generator
 ```
+
+### How To Use
+```
+getx_generator
+```
+
+### How To Uninstall
+```
+flutter pub global deactivate getx_generator
+```
