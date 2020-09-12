@@ -1,3 +1,7 @@
+export "package:process_run/process_run.dart";
+export "package:args/args.dart";
+export "package:path/path.dart";
+
 export "package:getx_generator/core.dart";
 export "package:getx_generator/getx_generator.dart";
 export "package:getx_generator/resources/session/package_info.dart";

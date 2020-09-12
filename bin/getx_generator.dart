@@ -44,6 +44,9 @@ void main(List<String> args) async {
 }
 
 void doGenerateDefinedTemplate(String templateName) async {
+  var f = await File("defined_templates/");
+  if (!f.existsSync()) return;
+
   var file = await File("defined_template/${templateName}.dartx");
   var template = await file.readAsString();
   var fileName = "lib/resources/template/${templateName}.dart";
@@ -88,6 +91,39 @@ void createImport() async {
   }
 
   var outputName = "lib/core.dart";
-  var content = "${importScriptList.join("\n")}";
+  var packageImport = await getPackageImport();
+  var content = "${packageImport}\n\n${importScriptList.join("\n")}";
   await Template.create(outputName, content);
+}
+
+Future<String> getPackageImport() async {
+  List importScriptList = [];
+  var content = await File("pubspec.yaml").readAsString();
+
+  var start = 'dependencies:';
+  var end = 'dev_dependencies:';
+
+  var startIndex = content.indexOf(start);
+  var endIndex = content.indexOf(end);
+  var result = content.substring(startIndex + start.length, endIndex).trim();
+
+  var arr = result.split("\n");
+
+  var excludeList = [
+    "fluter",
+    "sdk",
+    "git",
+  ];
+
+  for (var i = 0; i < arr.length; i++) {
+    var row = arr[i];
+
+    if (row.contains(":")) {
+      var lib = row.split(":")[0].trim();
+      if (excludeList.contains(lib)) continue;
+      importScriptList.add("export \"package:$lib/$lib.dart\";");
+    }
+  }
+
+  return importScriptList.join("\n");
 }
