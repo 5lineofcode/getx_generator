@@ -1,1 +1,2 @@
-flutter_backend
+pubver bump patch
+flutter pub publish
