@@ -1,13 +1,44 @@
 import "dart:io";
 import "package:getx_generator/resources/session/package_info.dart";
 import "package:getx_generator/resources/template/controller.dart";
+import 'package:getx_generator/resources/template/view.dart';
 import 'package:getx_generator/shared/extension/clean_filename.dart';
 import "package:getx_generator/shared/helper/template/template.dart";
+import 'package:args/args.dart';
 
-void main(List<String> arguments) async {
-  await getPackageName();
+ArgResults argResults;
+Map getArgumentsMap(ArgResults argResults) {
+  Map res = {};
+  var args = argResults.arguments;
+
+  for (var i = 0; i < args.length; i++) {
+    var arg = args[i];
+    if (arg.startsWith("-")) {
+      var key = arg;
+      var value = args[i + 1];
+
+      key = key.replaceAll("-", "");
+      res[key] = value;
+    }
+  }
+
+  return res;
+}
+
+void main(List<String> args) async {
+  final parser = ArgParser();
+  parser.addFlag('name', abbr: "n");
+  parser.addFlag('address', abbr: "a");
+  argResults = parser.parse(args);
+  var res = getArgumentsMap(argResults);
+  print(res["name"]);
+  print(res["address"]);
+
+  // await getPackageName();
   // await createController();
-  await createImport();
+  // await createImport();
+
+  // await createView();
 }
 
 void getPackageName() async {
@@ -26,7 +57,13 @@ void getPackageName() async {
 
 void createController() async {
   var template = controllerTemplate;
-  var outputName = "generated/test/test_controller.dart";
+  var outputName = "generated/test/controller.dart";
+  await Template.create(outputName, template);
+}
+
+void createView() async {
+  var template = viewTemplate;
+  var outputName = "generated/test/view.dart";
   await Template.create(outputName, template);
 }
 
