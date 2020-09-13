@@ -36,9 +36,8 @@ void main(List<String> args) async {
   // // print(res["address"]);
 
   // // await generateDefinedTemplate();
-  
+
   await getPackageName();
-  
 
   // await createController();
   await createImport();
@@ -123,8 +122,8 @@ Future<String> getPackageImport() async {
     if (row.contains(":") && !row.contains("#")) {
       var lib = row.split(":")[0].trim();
 
-      print("Skip $lib");
       if (excludeList.contains(lib)) {
+        print("Skip $lib");
         continue;
       }
       ;
